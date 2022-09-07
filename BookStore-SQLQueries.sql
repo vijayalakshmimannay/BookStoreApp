@@ -23,3 +23,10 @@ AS
 BEGIN
 INSERT INTO Users(FullName,EmailId,Password,MobileNumber) VALUES (@FullName, @EmailId, @Password, @MobileNumber)
 END
+
+Go
+CREATE PROCEDURE [Login] @EmailId VARCHAR(100), @Password VARCHAR (100)
+AS
+BEGIN
+SELECT EmailId,Password FROM Users WHERE EmailId= @EmailId AND Password=@Password
+END

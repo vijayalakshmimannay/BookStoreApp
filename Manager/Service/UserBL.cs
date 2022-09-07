@@ -41,5 +41,18 @@ namespace Manager.Service
                 throw;
             }
         }
+
+        public string ForgetPassword(string EmailId)
+        {
+            try
+            {
+                return iuserRL.ForgetPassword(EmailId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

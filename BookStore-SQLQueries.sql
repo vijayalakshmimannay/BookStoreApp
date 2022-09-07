@@ -30,3 +30,12 @@ AS
 BEGIN
 SELECT EmailId,Password FROM Users WHERE EmailId= @EmailId AND Password=@Password
 END
+
+CREATE PROCEDURE ForgetPassword
+(
+@EmailId varchar(180)
+)
+As
+Begin
+	Select * from Users where EmailId=@EmailId
+End;

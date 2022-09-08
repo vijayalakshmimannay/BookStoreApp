@@ -6,7 +6,7 @@ namespace Model
 {
     public class ResetModel
     {
-        public string EmailId { get; set; }
         public string ResetPassword { get; set; }
+        public string ConfirmPassword { get; set; }
     }
 }

@@ -11,5 +11,6 @@ namespace Manager.Interface
         public bool Login(LoginModel loginModel);
 
         public string ForgetPassword(string EmailId);
+        public bool ResetPassword(ResetModel resetModel, string EmailId);
     }
 }

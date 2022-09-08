@@ -40,8 +40,8 @@ namespace Model
             string Body = Token;
 
             MailMessage mail = new MailMessage();
-            mail.From = new MailAddress("lakshmi.bridgelabz@gmail.com");
-            mail.To.Add("lakshmi.bridgelabz@gmail.com");
+            mail.From = new MailAddress("aarna.bridgelabz@gmail.com");
+            mail.To.Add("aarna.bridgelabz@gmail.com");
             mail.Subject = "subject";
 
             mail.IsBodyHtml = true;
@@ -57,7 +57,7 @@ namespace Model
             var SMTP = new SmtpClient("smtp.gmail.com")
             {
                 Port = 587,
-                Credentials = new NetworkCredential("lakshmi.bridgelabz@gmail.com", "laizuhexngdcbfaj"),
+                Credentials = new NetworkCredential("aarna.bridgelabz@gmail.com", "mybkgexloxjjbuuc"),
                 EnableSsl = true
             };
             SMTP.Send(mail);
@@ -65,4 +65,6 @@ namespace Model
         }
     
     }
+
+
 }

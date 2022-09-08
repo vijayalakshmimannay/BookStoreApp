@@ -39,3 +39,12 @@ As
 Begin
 	Select * from Users where EmailId=@EmailId
 End;
+
+
+CREATE PROCEDURE ResetPassword
+	@EmailId varchar(100),
+	@Password varchar(100)
+AS
+BEGIN
+	UPDATE Users SET Password = @Password WHERE EmailId = @EmailId;
+END

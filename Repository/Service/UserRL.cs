@@ -205,7 +205,79 @@ namespace Repository.Service
             }
 
         }
+        //public string ResetPassword(ResetModel resetModel)
+        //{
+        //    sqlConnection = new SqlConnection(this.Configuration.GetConnectionString("DBConnection"));
+        //    try
+        //    {
+        //        using (sqlConnection)
+        //        {
+        //            sqlConnection.Open();
+        //            SqlCommand command = new SqlCommand("ResetPassword", sqlConnection);
+        //            command.CommandType = CommandType.StoredProcedure;
 
+        //            var encryptedPassword = EncryptPassword(resetModel.ResetPassword);
+
+        //            command.Parameters.AddWithValue("@EmailId", resetModel.EmailId);
+        //            command.Parameters.AddWithValue("@Password", encryptedPassword);
+
+
+        //            var result = command.ExecuteNonQuery();
+
+        //            if (result > 0)
+        //            {
+        //                return "Password Changed";
+        //            }
+        //            else
+        //            {
+        //                return null;
+        //            }
+        //        }
+        //    }
+        //    catch (Exception)
+        //    {
+        //        throw;
+        //    }
+        //}
+
+        public bool ResetPassword(ResetModel resetModel, string EmailId)
+        {
+            sqlConnection = new SqlConnection(this.Configuration.GetConnectionString("DBConnection"));
+            using (sqlConnection)
+            {
+                try
+                {
+                    if (resetModel.ResetPassword.Equals(resetModel.ConfirmPassword))
+                    {
+                        SqlCommand command = new SqlCommand("dbo.ResetPassword", sqlConnection);
+                        command.CommandType = CommandType.StoredProcedure;
+                        var password = EncryptPassword(resetModel.ResetPassword);
+                        sqlConnection.Open();
+                        command.Parameters.AddWithValue("@EmailId", EmailId);
+                        command.Parameters.AddWithValue("@Password", password);
+                        int result = command.ExecuteNonQuery();
+                        if (result > 0)
+                        {
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                        return false;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+                finally
+                {
+                    sqlConnection.Close();
+                }
+            }
+        }
 
     }
 

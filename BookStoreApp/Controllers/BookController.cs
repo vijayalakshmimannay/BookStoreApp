@@ -31,6 +31,46 @@ namespace BookStoreApp.Controllers
                 throw;
             }
         }
+        [HttpGet("GetBookById")]
+        public ActionResult GetBookById(int BookId)
+        {
+            try
+            {
+                var book = this.bookBL.GetBookById(BookId);
+
+                if (book != null)
+                {
+                    return this.Ok(new { success = true, message = "Getting your book", data = book });
+                }
+                return this.BadRequest(new { success = false, message = "Failed to get your book", data = book });
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        [HttpGet("GetAllBooks")]
+        public ActionResult GetAllBooks()
+        {
+            try
+            {
+                var book = this.bookBL.GetAllBooks();
+
+                if (book != null)
+                {
+                    return this.Ok(new { success = true, message = "Getting all of your books", data = book });
+                }
+                return this.BadRequest(new { success = false, message = "Failed to get your all books", data = book });
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
 
         [HttpPut("UpdateBook")]
         public ActionResult UpdateBook(BookModel bookModel)

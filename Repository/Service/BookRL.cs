@@ -70,13 +70,12 @@ namespace Repository.Service
             List<GetAllBookModel> books = new List<GetAllBookModel>();
             try
             {
-                using (SqlConnection con = new SqlConnection(Configuration["ConnectionStrings:BookStore"]))
+                sqlConnection = new SqlConnection(this.Configuration.GetConnectionString("DBConnection"));
+                using (sqlConnection)
                 {
-                    SqlCommand cmd = new SqlCommand("GetAllBooks", con);
+                    SqlCommand cmd = new SqlCommand("GetAllBooks", sqlConnection);
                     cmd.CommandType = CommandType.StoredProcedure;
-
-                    con.Open();
-
+                    sqlConnection.Open();
                     SqlDataReader reader = cmd.ExecuteReader();
 
                     if (reader.HasRows)
@@ -96,7 +95,7 @@ namespace Repository.Service
                                 BookQuantity = Convert.ToInt32(reader["BookQuantity"]),
                             });
                         }
-                        con.Close();
+                        sqlConnection.Close();
                         return books;
                     }
                     else
@@ -116,14 +115,15 @@ namespace Repository.Service
         {
             try
             {
-                using (SqlConnection con = new SqlConnection(Configuration["ConnectionStrings:BookStore"]))
+                sqlConnection = new SqlConnection(this.Configuration.GetConnectionString("DBConnection"));
+                using (sqlConnection)
                 {
-                    SqlCommand cmd = new SqlCommand("GetBookById", con);
+                    SqlCommand cmd = new SqlCommand("GetBookById", sqlConnection);
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     cmd.Parameters.AddWithValue("@BookId ", BookId);
 
-                    con.Open();
+                    sqlConnection.Open();
                     var result = cmd.ExecuteNonQuery();
 
                     SqlDataReader reader = cmd.ExecuteReader();
@@ -133,7 +133,8 @@ namespace Repository.Service
                         BookModel model = new BookModel();
                         while (reader.Read())
                         {
-                            BookId = Convert.ToInt32(reader["BookId"]);
+                           //BookId = Convert.ToInt32(reader["BookId"]);
+                            model.BookId = Convert.ToInt32(reader["BookId"]);
                             model.BookName = reader["BookName"].ToString();
                             model.AuthorName = reader["AuthorName"].ToString();
                             model.Rating = reader["Rating"].ToString();
@@ -144,7 +145,7 @@ namespace Repository.Service
                             model.BookQuantity = Convert.ToInt32(reader["BookQuantity"]);
 
                         }
-                        con.Close();
+                        sqlConnection.Close();
                         return model;
                     }
                     else
@@ -170,6 +171,7 @@ namespace Repository.Service
                     SqlCommand command = new SqlCommand("UpdateBook", sqlConnection);
                     command.CommandType = CommandType.StoredProcedure;
                     sqlConnection.Open();
+
                     command.Parameters.AddWithValue("@BookId ", bookModel.BookId);
                     command.Parameters.AddWithValue("@BookName ", bookModel.BookName);
                     command.Parameters.AddWithValue("@AuthorName", bookModel.AuthorName);

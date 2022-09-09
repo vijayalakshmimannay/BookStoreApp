@@ -1,6 +1,8 @@
 ﻿CREATE DATABASE BookStoreDB;
 use BookStoreDB
 
+----Create Table for Users -----
+
 create table Users (
 	ID int IDENTITY(1,1) PRIMARY KEY (ID),
 	FullName varchar(50),

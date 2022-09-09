@@ -17,6 +17,10 @@ namespace BookStoreApp.Controllers
             this.cartBL = cartBL;
         }
 
+        //[Authorize(Roles = Role.Users)]
+        // [HttpPost]
+        // [Route("AddToCart")]
+
         [Authorize]
         [HttpPost("AddToCart")]
         public ActionResult AddtoCart(CartModel cart)
@@ -40,8 +44,11 @@ namespace BookStoreApp.Controllers
                 throw ex;
             }
         }
+        //[Authorize(Roles = Role.Users)]
+        // [HttpPost]
+        // [Route("UpdateCart")]
         [Authorize]
-        [HttpPut("UpdateCart")]
+        [HttpPost("UpdateCart")]
         public ActionResult UpdateCart(int cartId, CartModel cart)
         {
             try
@@ -64,8 +71,12 @@ namespace BookStoreApp.Controllers
                 throw e;
             }
         }
+        //[Authorize(Roles = Role.Users)]
+        // [HttpPost]
+        //[Route("DeleteItemInCart")]
+
         [Authorize]
-        [HttpDelete("DeleteItemInCart")]
+        [HttpPost("DeleteItemInCart")]
         public ActionResult RemoveCart(int cartId)
         {
             try
@@ -84,7 +95,27 @@ namespace BookStoreApp.Controllers
                 throw ex;
             }
         }
+        [HttpGet("GetItemsInCart")]
+        public IActionResult GetAllCart(int UserId)
+        {
+            try
+            {
+                int UserID = Convert.ToInt32(User.Claims.FirstOrDefault(g => g.Type == "ID").Value);
+                var result = cartBL.GetAllCart(UserId);
 
-
+                if (result != null)
+                {
+                    return Ok(new { Success = true, Message = "Successful ", Data = result });
+                }
+                else
+                {
+                    return BadRequest(new { Success = false, Message = "Unsuccessful " });
+                }
+            }
+            catch (System.Exception)
+            {
+                throw;
+            }
+        }
     }
 }

@@ -8,5 +8,8 @@ namespace Manager.Interface
     public interface IWishListBL
     {
         public WishListModel AddWishList(WishListModel wish, int UserId);
+        public string DeleteWishList(int WishListId, int UserId);
+        public IEnumerable<WishListModel> GetWishList(int UserId);
+
     }
 }

@@ -27,6 +27,31 @@ namespace Manager.Service
                 throw;
             }
         }
+
+        public string DeleteWishList(int WishListId, int UserId)
+        {
+            try
+            {
+                return this.wishList.DeleteWishList(WishListId, UserId);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public IEnumerable<WishListModel> GetWishList(int UserId)
+        {
+            try
+            {
+                return this.wishList.GetWishList(UserId);
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
+
     }
 
 }

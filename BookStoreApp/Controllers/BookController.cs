@@ -1,4 +1,5 @@
 ﻿using Manager.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Model;
 using System;
@@ -12,8 +13,10 @@ namespace BookStoreApp.Controllers
         {
             this.bookBL = bookBL;
         }
-
-        [HttpPost("AddBook")]
+        [Authorize(Roles = Role.Admin)]
+        [HttpPost]
+        [Route("AddBook")]
+       
         public ActionResult AddBook(BookModel bookModel)
         {
             try
@@ -31,7 +34,10 @@ namespace BookStoreApp.Controllers
                 throw;
             }
         }
-        [HttpGet("GetBookById")]
+         [Authorize]
+        [HttpPost]
+        [Route("GetBookById")]
+       
         public ActionResult GetBookById(int BookId)
         {
             try
@@ -51,8 +57,12 @@ namespace BookStoreApp.Controllers
             }
         }
 
-        [HttpGet("GetAllBooks")]
-        public ActionResult GetAllBooks()
+        // [Authorize(Roles = Role.Admin)]
+        //[HttpPost]
+        // [Route("GetAllBooks")]
+        [HttpPost]
+        [Route("GetAllBooks")]
+         public ActionResult GetAllBooks()
         {
             try
             {
@@ -72,7 +82,11 @@ namespace BookStoreApp.Controllers
             }
         }
 
-        [HttpPut("UpdateBook")]
+        // [Authorize(Roles = Role.Admin)]
+        // [HttpPost]
+        // [Route("UpdateBook")]
+        [HttpPost]
+        [Route("UpdateBook")]
         public ActionResult UpdateBook(BookModel bookModel)
         {
             try
@@ -90,8 +104,11 @@ namespace BookStoreApp.Controllers
                 throw;
             }
         }
-
-        [HttpDelete("DeleteBook")]
+        // [Authorize(Roles = Role.Admin)]
+        // [HttpPost]
+        // [Route("DeleteBook")]
+        [HttpPost]
+        [Route("DeleteBook")]
         public ActionResult DeleteBook(int BookId)
         {
             try

@@ -53,5 +53,17 @@ namespace Manager.Service
                 throw;
             }
         }
+
+        public IEnumerable<CartModel> GetAllCart(int UserId)
+        {
+            try
+            {
+                return this.cartRL.GetAllCart(UserId);
+            }
+            catch (Exception)
+            {
+                throw new Exception();
+            }
+        }
     }
 }

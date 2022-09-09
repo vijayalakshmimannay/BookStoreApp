@@ -18,6 +18,8 @@ namespace Repository.Service
         public IConfiguration Configuration { get; }
 
         SqlConnection sqlConnection;
+        SqlDataReader sqlDataReader;
+        List<GetCartModel> cart = new List<GetCartModel>();
         public CartModel AddCart(CartModel cart, int UserId)
         {
             try
@@ -122,5 +124,44 @@ namespace Repository.Service
                 throw ex;
             }
         }
+
+        public IEnumerable<CartModel> GetAllCart(int UserId)
+        {
+            List<CartModel> cartModel = new List<CartModel>();
+
+            sqlConnection = new SqlConnection(this.Configuration.GetConnectionString("DBConnection"));
+          
+            try
+            {
+                using (sqlConnection)
+                {
+                    sqlConnection.Open();
+
+                    String query = "SELECT CartId, Book_Quantity, BookId FROM Cart WHERE UserId = '" + UserId + "'";
+                    SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
+                    SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+                    while (sqlDataReader.Read())
+                    {
+                        cartModel.Add(new CartModel()
+                        {
+                            BookId = (int)sqlDataReader["BookId"],
+                            BookQuantity = (int)sqlDataReader["Book_Quantity"]
+
+
+                        });
+                    }
+                    return cartModel;
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                sqlConnection.Close();
+            }
+        }
     }
 }
+

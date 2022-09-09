@@ -13,7 +13,7 @@ namespace BookStoreApp.Controllers
             this.iAdminBL = iAdminBL;
         }
         [HttpPost]
-        [Route("Login")]
+        [Route("AdminLogin")]
         public IActionResult Login(LoginModel loginModel)
         {
             try
@@ -21,11 +21,11 @@ namespace BookStoreApp.Controllers
                 var result = this.iAdminBL.AdminLogin(loginModel);
                 if (result != null)
                 {
-                    return Ok(new { success = true, message = "Login Successfull" });
+                    return Ok(new { success = true, message = "Admin Login Successfull", data = result });
                 }
                 else
                 {
-                    return BadRequest(new { success = false, message = "Login UnSuceessfull" });
+                    return BadRequest(new { success = false, message = "Admin Login UnSuceessfull" });
                 }
             }
             catch (System.Exception)

@@ -22,7 +22,7 @@ namespace Repository.Service
 
         SqlConnection sqlConnection;
 
-        public bool AdminLogin(LoginModel loginModel)
+        public string AdminLogin(LoginModel loginModel)
         {
             sqlConnection = new SqlConnection(this.Configuration.GetConnectionString("DBConnection"));
             using (sqlConnection)
@@ -43,11 +43,12 @@ namespace Repository.Service
                         string query = "SELECT AdminId FROM AdminTable WHERE EmailId = '" + result + "'";
                         SqlCommand cmd = new SqlCommand(query, sqlConnection);
                         var Id = cmd.ExecuteScalar();
-                        return true;
+                        var token = GenerateSecurityToken(loginModel.EmailId, Id.ToString());
+                        return token;
                     }
                     else
                     {
-                        return false;
+                        return null;
                     }
                 }
                 catch (Exception e)
@@ -61,7 +62,7 @@ namespace Repository.Service
             }
         }
 
-        public string GenerateSecurityToken(string email, long userID)
+        public string GenerateSecurityToken(string email, string userID)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(this.Configuration[("JWT:key")]));
@@ -69,9 +70,9 @@ namespace Repository.Service
             {
                 Subject = new ClaimsIdentity(new[]
                 {
-                   new Claim(ClaimTypes.Role, "AdminTable"),
-                   new Claim(ClaimTypes.Email, email),
-                   new Claim("ID", userID.ToString())
+                    new Claim(ClaimTypes.Role, "Admin"),
+                    new Claim(ClaimTypes.Email, email),
+                    new Claim("ID", userID.ToString())
                 }),
                 Expires = DateTime.UtcNow.AddMinutes(30),
                 SigningCredentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256Signature)

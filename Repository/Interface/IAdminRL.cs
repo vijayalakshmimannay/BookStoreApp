@@ -7,6 +7,6 @@ namespace Repository.Interface
 {
     public interface IAdminRL
     {
-        public bool AdminLogin(LoginModel loginModel);
+        public string AdminLogin(LoginModel loginModel);
     }
 }

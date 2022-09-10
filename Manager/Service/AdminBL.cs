@@ -15,13 +15,13 @@ namespace Manager.Service
         {
             this.iAdminRL = iAdminRL;
         }
-        public bool AdminLogin(LoginModel loginModel)
+        public string AdminLogin(LoginModel loginModel)
         {
             try
             {
                 return iAdminRL.AdminLogin(loginModel);
             }
-            catch
+            catch (Exception)
             {
                 throw;
             }

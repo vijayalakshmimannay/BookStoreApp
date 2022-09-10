@@ -3,7 +3,7 @@
 
     public static class Role
     {
-        public const string Admin = "AdminTable";
+        public const string Admin = "Admin";
         public const string Users = "Users";
     }
 

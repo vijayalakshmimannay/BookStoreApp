@@ -7,7 +7,7 @@ namespace Manager.Interface
 {
     public interface IAdminBL
     {
-        public bool AdminLogin(LoginModel loginModel);
+        public string AdminLogin(LoginModel loginModel);
     }
         
 }

@@ -4,6 +4,8 @@ using Model;
 
 namespace BookStoreApp.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class AdminController : Controller
     {
         private readonly IAdminBL iAdminBL;
@@ -13,15 +15,15 @@ namespace BookStoreApp.Controllers
             this.iAdminBL = iAdminBL;
         }
         [HttpPost]
-        [Route("AdminLogin")]
+        [Route("Login")]
         public IActionResult Login(LoginModel loginModel)
         {
             try
             {
-                var result = this.iAdminBL.AdminLogin(loginModel);
+                var result = iAdminBL.AdminLogin(loginModel);
                 if (result != null)
                 {
-                    return Ok(new { success = true, message = "Admin Login Successfull", data = result });
+                    return Ok(new { success = true, message = "Admin Login Successfull", data = result});
                 }
                 else
                 {

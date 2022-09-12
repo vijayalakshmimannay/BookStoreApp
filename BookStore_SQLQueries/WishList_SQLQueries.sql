@@ -18,3 +18,27 @@ As
 Begin
  INSERT INTO WishList VALUES (@UserId,@BookId);
 END;
+
+----------------- Store procedure for Get Wishlist ------------------
+CREATE PROCEDURE GetWishList
+(@UserId int)
+As
+Begin
+
+SELECT WishListId,UserId,c.BookId,BookName,AuthorName,
+	DiscountPrice,ActualPrice,BookImage from WishList c join Book b on c.BookId=b.BookId 
+WHERE UserId=@UserId;
+END;
+
+------------- Store procedure for Delete wishlist ----------------
+create procedure DeleteWishList
+(
+@WishListId int,
+@UserId int
+)
+as
+begin
+delete WishList where WishListId = @WishListId and UserId=@UserId;
+end;
+
+

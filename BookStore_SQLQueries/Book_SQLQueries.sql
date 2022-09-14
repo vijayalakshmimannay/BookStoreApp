@@ -17,6 +17,8 @@ BookQuantity int not null
 
 select * from Book
 
+update Book SET BookQuantity = '49' where BookId = '1'
+
 
 --------Adding book--------
 

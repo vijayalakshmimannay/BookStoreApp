@@ -61,7 +61,7 @@ namespace Repository.Service
             }
         }
 
-        public bool UserLogin(LoginModel loginModel)
+        public string UserLogin(LoginModel loginModel)
         {
             sqlConnection = new SqlConnection(this.Configuration.GetConnectionString("DBConnection"));
             using (sqlConnection)
@@ -82,11 +82,12 @@ namespace Repository.Service
                         string query = "SELECT ID FROM Users WHERE EmaiLId = '" + result + "'";
                         SqlCommand cmd = new SqlCommand(query, sqlConnection);
                         var Id = cmd.ExecuteScalar();
-                        return true;
+                        var token = GenerateSecurityToken(loginModel.EmailId, loginModel.ID);
+                        return token;
                     }
                     else
                     {
-                        return false;
+                        return null;
                     }
                 }
                 catch (Exception e)

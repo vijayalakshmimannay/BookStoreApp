@@ -29,7 +29,7 @@ namespace Manager.Service
             }
         }
 
-        public bool Login(LoginModel loginModel)
+        public string Login(LoginModel loginModel)
         {
             try
             {

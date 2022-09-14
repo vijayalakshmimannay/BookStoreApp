@@ -47,7 +47,7 @@ namespace BookStoreApp.Controllers
                 var result = this.iUserBl.Login(loginModel);
                 if (result != null)
                 {
-                    return Ok(new { success = true, message = "Login Successfull" });
+                    return Ok(new { success = true, message = "Login Successfull", data = result});
                 }
                 else
                 {

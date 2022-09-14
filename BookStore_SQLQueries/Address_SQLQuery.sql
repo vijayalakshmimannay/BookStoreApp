@@ -33,6 +33,11 @@ VALUES ('Other')
 
 SELECT * FROM AddressTable
 
+
+alter table AddressTable add constraint fk_UserID_AddressTable foreign key(UserID) references Users(ID);
+
+alter table AddressTable add constraint fk_TypeID_AddressTable foreign key(TypeID) references AddressType(TypeID);
+
 ----------- Store procedure for Add Address ----------
 
 GO
